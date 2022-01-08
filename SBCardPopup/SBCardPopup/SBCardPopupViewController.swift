@@ -32,6 +32,7 @@ public class SBCardPopupViewController: UIViewController {
     public var disableSwipeToDismiss = false
     public var disableTapToDismiss = false
     public var cornerRadius = CGFloat(7)
+    public var onClose: (() -> ())?
 
     public init(contentViewController viewController: UIViewController) {
         contentViewController = viewController
@@ -348,7 +349,7 @@ public class SBCardPopupViewController: UIViewController {
             self.view.layoutIfNeeded()
         }, completion: {
             _ in
-            self.dismiss(animated: false, completion: nil)
+            self.dismiss(animated: false, completion: onClose)
         })
     }
     
@@ -470,7 +471,7 @@ public class SBCardPopupViewController: UIViewController {
         
         // Remove if the content view is off screen
         if swipeOffset > view.bounds.size.height / 2 {
-            dismiss(animated: false, completion: nil)
+            dismiss(animated: false, completion: onClose)
         }
         
     }
